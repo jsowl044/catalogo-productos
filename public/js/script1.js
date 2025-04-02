@@ -71,11 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
             precio: parseFloat(inputPrecio.value), // Convertir el precio a número
             imagen: imagenBase64, // Base64 de la imagen
         };
-    
-        console.log('Producto a guardar:', nuevoProducto); // Verifica los datos antes de enviarlos
+        if (!productoId) {
+            delete nuevoProducto.id;
+        }
     
         await guardarProducto(nuevoProducto);
-        productos = await cargarProductos();
+        cargarProductos();
         mostrarProductos();
         formProducto.reset();
         previewImagenDiv.innerHTML = '';
@@ -106,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } 
     async function guardarProducto(producto) {
         try {
-            console.log('Enviando producto al servidor:', producto); 
             const metodo = producto.id ? 'PUT' : 'POST'; // Usar PUT si el producto tiene ID, POST si es nuevo
             const url = producto.id
                 ? `/api/productos/${producto.id}` // Ruta para actualizar un producto existente
@@ -118,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify(producto),
             });
-    
             if (!respuesta.ok) {
                 throw new Error('Error al guardar el producto');
             }
@@ -128,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function mostrarProductos() {
         listaProductosDiv.innerHTML = '';
+        console.log(productos.length); // Para depuración
         if (productos.length === 0) {
             listaProductosDiv.innerHTML = '<p>No hay productos en el catálogo.</p>';
             return;

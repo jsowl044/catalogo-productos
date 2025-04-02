@@ -19,6 +19,7 @@ app.use(express.json()); // Middleware para leer JSON
 const leerProductos = () => {
     try {
         const data = fs.readFileSync(productosFile, 'utf-8');
+        console.log('Productos leídos:', JSON.parse(data));
         return JSON.parse(data);
     } catch (error) {
         console.error('Error al leer productos.json:', error);
@@ -28,7 +29,7 @@ const leerProductos = () => {
 
 // Función para guardar productos en productos.json
 const guardarProductos = (productos) => {
-    fs.writeFileSync(productosFile, JSON.stringify(productosSanitizados, null, 2));
+    fs.writeFileSync(productosFile, JSON.stringify(productos, null, 2));
 };
 
 // Obtener todos los productos

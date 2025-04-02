@@ -107,11 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const productoHTML = document.createElement('div');
             productoHTML.classList.add('producto'); // Clase CSS para estilos
             productoHTML.setAttribute('data-id', producto.id); // Agregar el atributo data-id
+            const precio = typeof producto.precio === 'number' ? producto.precio : parseFloat(producto.precio) || 0;
             productoHTML.innerHTML = `
                 <img src="${producto.imagen}" alt="${producto.nombre}">
                 <h3>${producto.nombre}</h3>
                 <p>${producto.descripcion}</p>
-                <p>Precio: $${producto.precio.toFixed(2)}</p>
+                <p>Precio: $${precio.toFixed(2)}</p>
             `;
             contenedorProductos.appendChild(productoHTML);
         });
