@@ -3,28 +3,28 @@
     "id": 1,
     "nombre": "Producto A",
     "descripcion": "Descripción del Producto A. Este es un producto de ejemplo.",
-    "imagen": "https://picsum.photos/800/600?random=1",
+    "imagen": "public/assets/1.jpg",
     "precio": 25.99
   },
   {
     "id": 2,
     "nombre": "Producto B",
     "descripcion": "Descripción del Producto B. Otro producto para mostrar.",
-    "imagen": "https://picsum.photos/800/600?random=2",
+    "imagen": "public/assets/2.jpg",
     "precio": 49.5
   },
   {
     "id": 3,
     "nombre": "Producto C",
     "descripcion": "Descripción del Producto C. Un tercer producto en el catálogo.",
-    "imagen": "https://picsum.photos/800/600?random=3",
+    "imagen": "public/assets/3.jpg",
     "precio": 15.75
   },
   {
     "id": 4,
     "nombre": "Producto D",
     "descripcion": "Descripción del Producto D. Un cuarto producto para el catálogo.",
-    "imagen": "https://picsum.photos/800/600?random=4",
+    "imagen": "public/assets/.jpg",
     "precio": 32.99
   }
 ]
