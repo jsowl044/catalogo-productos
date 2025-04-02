@@ -10,10 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const generarCarrusel = (productos) => {
         carrusel.innerHTML = ''; // Limpiar el carrusel antes de agregar imágenes
         productos.forEach(producto => {
-            const slide = document.createElement('li');
-            slide.classList.add('splide__slide');
-            slide.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}">`;
-            carrusel.appendChild(slide);
+            if (producto.imagen) {
+                const slide = document.createElement('li');
+                slide.classList.add('splide__slide');
+                slide.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}">`;
+                carrusel.appendChild(slide);
+            }
         });
 
         // Inicializar el carrusel con Splide.js
@@ -25,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
             interval: 3000, 
             pauseOnHover: true, 
             heightRatio: 0.3,
-            pagination: true, // Mostrar indicadores de página
-            arrows: true,     // Mostrar botones de navegación
+            pagination: true, 
+            arrows: true,     
         }).mount();
     };
 
