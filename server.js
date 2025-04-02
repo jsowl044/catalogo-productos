@@ -3,6 +3,7 @@ const app = express();
 const port = 4000; // Puedes cambiar el puerto si lo deseas
 // Middleware para servir archivos estáticos desde la carpeta 'public'
 app.use(express.static('public'));
+app.use(express.json()); // Middleware para leer JSON
 // Endpoint API para obtener los productos desde productos.json
 app.get('/api/productos', (req, res) => {
 const productos = require('./productos.json'); // Cargar el archivo JSON
@@ -13,23 +14,34 @@ const fs = require('fs');
 const path = require('path');
 
 const productosFile = path.join(__dirname, 'productos.json');
-app.use(express.json()); // Middleware para leer JSON
+
 
 // Función para leer productos desde productos.json
 const leerProductos = () => {
     try {
         const data = fs.readFileSync(productosFile, 'utf-8');
-        console.log('Productos leídos:', JSON.parse(data));
+        console.log(data);
         return JSON.parse(data);
     } catch (error) {
         console.error('Error al leer productos.json:', error);
         return [];
     }
 };
+// Desacrivar cache
+app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+});
 
 // Función para guardar productos en productos.json
 const guardarProductos = (productos) => {
-    fs.writeFileSync(productosFile, JSON.stringify(productos, null, 2));
+    fs.writeFile(productosFile, JSON.stringify(productos, null, 2), (err) => {
+        if (err) {
+            console.error('Error al guardar productos.json:', err);
+        }
+    });
 };
 
 // Obtener todos los productos
@@ -67,13 +79,12 @@ app.put('/api/productos/:id', (req, res) => {
 app.delete('/api/productos/:id', (req, res) => {
     let productos = leerProductos();
     const { id } = req.params;
-    const productosFiltrados = productos.filter(p => p.id != id);
-
+    const productosFiltrados = productos.filter(p => String(p.id) != String(id));
     if (productos.length === productosFiltrados.length) {
         return res.status(404).json({ error: 'Producto no encontrado' });
     }
-
-    guardarProductos(productosFiltrados);
+    console.log(productosFiltrados);
+    fs.writeFileSync(productosFile, JSON.stringify(productosFiltrados, null, 2));
     res.json({ mensaje: 'Producto eliminado' });
 });
 

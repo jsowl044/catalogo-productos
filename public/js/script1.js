@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
         await guardarProducto(nuevoProducto);
         cargarProductos();
-        mostrarProductos();
         formProducto.reset();
         previewImagenDiv.innerHTML = '';
         inputProductoId.value = '';
@@ -95,14 +94,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
     async function cargarProductos() {
         try {
-            const respuesta = await fetch('/api/productos'); // Ruta del servidor Express
+            const timestamp = new Date().getTime();
+            const respuesta = await fetch(`/api/productos?t=${timestamp}`, { 
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            });
             if (!respuesta.ok) {
                 throw new Error('Error al cargar los productos');
             }
-            productos = await respuesta.json(); // Convertir la respuesta a JSON
+            const datos = await respuesta.json();
+            console.log('Datos cargados desde el servidor:', datos);
+            productos = datos;
             mostrarProductos(); // Mostrar los productos en la página
         } catch (error) {
-            console.error(error);
+            console.error(error);   
         }   
     } 
     async function guardarProducto(producto) {
@@ -200,6 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!respuesta.ok) {
                 throw new Error('Error al eliminar el producto');
             }
+            cargarProductos(); 
+            
         } catch (error) {
             console.error(error);
         }
