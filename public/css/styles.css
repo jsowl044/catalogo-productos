@@ -1,0 +1,154 @@
+/* Estilos CSS Base - Los alumnos deben completar este archivo */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    }
+    header {
+    background-color: #f0f0f0; /* Un color gris claro base - Cambiar por los alumnos */
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    }
+    main {
+    display: flex; /* Para maquetación flexible - Los alumnos pueden
+    experimentar con grid también */
+    
+    flex-wrap: wrap; /* Para que los productos se envuelvan en pantallas
+    pequeñas */
+    justify-content: center; /* Centrar los productos horizontalmente */
+    padding: 20px;
+    }
+    .producto {
+    border: 1px solid #ccc; /* Borde básico para cada producto - Estilizar
+    por los alumnos */
+    margin: 10px;
+    padding: 15px;
+    text-align: center;
+    width: 250px; /* Ancho base para cada producto - Adaptar para
+    responsive */
+    }
+    .producto img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    }
+    /* TODO: Agregar estilos responsive aquí (media queries) para diferentes
+    tamaños de pantalla */
+    
+    footer {
+    background-color: #f0f0f0; /* Color base para el footer - Personalizar por alumnos */
+    padding: 10px;
+    text-align: center;
+    position: static; /* Footer fijo en la parte inferior - Opcional, los alumnos pueden cambiar */
+    bottom: 0;
+    width: 100%;
+    }
+
+/* Estilo del input de búsqueda */
+#buscador {
+    width: 300px; /* Ancho del input */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde del input */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+}
+/* Estilos para el modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: auto; /* Permitir desplazamiento si el contenido es demasiado grande */
+}
+
+/* Ajustar el tamaño máximo del modal */
+.modal-contenido {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%; /* Ajustar el ancho para pantallas pequeñas */
+    max-width: 500px; /* Ancho máximo para pantallas grandes */
+    max-height: 90%; /* Limitar la altura máxima al 90% de la pantalla */
+    overflow-y: auto; /* Habilitar desplazamiento vertical si el contenido es demasiado grande */
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Asegurar que el botón de cierre sea visible */
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1001; /* Asegurar que esté por encima del contenido del modal */
+}
+
+/* Ajustar el tamaño de las imágenes dentro del modal */
+.modal-contenido img {
+    max-width: 100%; /* Limitar el ancho máximo al tamaño del modal */
+    height: auto; /* Mantener la proporción de la imagen */
+    border-radius: 10px;
+}
+.cerrar:hover {
+    background-color: #f4f4f4;
+}
+
+/* Carrousel */
+#image-carousel {
+    max-width: 80%; /* Ajusta el ancho del carrusel (porcentaje o píxeles) */
+    margin: 0 auto; /* Centrar el carrusel horizontalmente */
+}
+
+#image-carousel .splide__track {
+    height: 300px; /* Ajusta la altura del carrusel */
+}
+.splide__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+ /* Ajustar tamaño para pantallas pequeñas */
+@media (max-width: 768px) {
+    #image-carousel {
+        max-width: 100%; /* Ancho completo en pantallas pequeñas */
+    }
+    #image-carousel .splide__track {
+        height: 200px; /* Ajustar altura para pantallas pequeñas */
+    }
+}
+/* Estilo de los botones de navegacion */
+.boton {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007bff; /* Color azul */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.boton:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+}

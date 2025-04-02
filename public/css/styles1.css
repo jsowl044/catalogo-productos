@@ -1,0 +1,155 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinea al inicio para que el formulario no se centre verticalmente si es largo */
+    min-height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
+    }
+    .container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 900px;
+    margin-bottom: 20px; /* Espacio debajo del contenedor principal */
+    }
+    h1, h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    }
+    .formulario-producto, .catalogo-productos {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+    }
+    .form-group {
+    margin-bottom: 15px;
+    }
+    .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group textarea,
+    .form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+    }
+    .form-group textarea {
+    resize: vertical; /* Permite redimensionar verticalmente el textarea
+    */
+    }
+    .form-buttons {
+    text-align: right; /* Alinea los botones a la derecha */
+    margin-top: 20px;
+    }
+    .form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-left: 10px; /* Espacio entre botones */
+    }
+    .form-buttons button[type="submit"] {
+    background-color: #5cb85c; /* Verde para guardar */
+    color: white;
+    }
+    .form-buttons button[type="button"] { /* Botón de cancelar */
+    background-color: #d9534f; /* Rojo para cancelar */
+    
+    color: white;
+    }
+    .producto-item {
+    border: 1px solid #eee;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    display: flex;
+    align-items: center; /* Alineación vertical de elementos en el
+    producto */
+    }
+    .producto-imagen {
+    width: 100px;
+    height: 100px;
+    margin-right: 15px;
+    border-radius: 5px;
+    object-fit: cover; /* Asegura que la imagen cubra el contenedor sin
+    deformarse */
+    border: 1px solid #ddd;
+    }
+    .producto-detalles {
+    flex-grow: 1; /* Permite que los detalles ocupen el espacio restante
+    */
+    }
+    .producto-nombre {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    }
+    .producto-descripcion {
+    color: #666;
+    margin-bottom: 10px;
+    }
+    .producto-precio {
+    font-weight: bold;
+    color: #4cae4c; /* Verde para el precio */
+    }
+    .producto-acciones {
+    display: flex;
+    gap: 10px; /* Espacio entre botones de acción */
+    }
+    
+    .producto-acciones button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    }
+    .producto-acciones button.editar {
+    background-color: #f0ad4e; /* Amarillo/Naranja para editar */
+    color: white;
+    }
+    .producto-acciones button.eliminar {
+    background-color: #d9534f; /* Rojo para eliminar */
+    color: white;
+    }
+    #preview-imagen img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    }
+    /* Estilo de los botones de navegacion */
+.boton {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007bff; /* Color azul */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.boton:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+}
