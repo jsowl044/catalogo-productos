@@ -1,11 +1,13 @@
 /* Estilos CSS Base - Los alumnos deben completar este archivo */
 body {
+    background-color: #E6F7FF;
     font-family: sans-serif;
     margin: 0;
     padding: 0;
+
     }
     header {
-    background-color: #f0f0f0; /* Un color gris claro base - Cambiar por los alumnos */
+    background-color: #3B6790; /* Un color gris claro base - Cambiar por los alumnos */
     padding: 20px;
     text-align: center;
     border-bottom: 1px solid #ddd;
@@ -19,25 +21,54 @@ body {
     justify-content: center; /* Centrar los productos horizontalmente */
     padding: 20px;
     }
+
+    /* NUEVO*/
     .producto {
-    border: 1px solid #ccc; /* Borde básico para cada producto - Estilizar
-    por los alumnos */
-    margin: 10px;
-    padding: 15px;
-    text-align: center;
-    width: 250px; /* Ancho base para cada producto - Adaptar para
-    responsive */
+        border: 2px solid #007bff; /* Borde más llamativo con color azul */
+        border-radius: 10px; /* Bordes redondeados */
+        margin: 15px; /* Más espacio entre los productos */
+        padding: 20px; /* Más espacio interno */
+        text-align: center;
+        width: 260px; /* Ligera ampliación del ancho */
+        background-color: #f8f9fa; /* Fondo suave */
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
+        font-family: 'arial', sans-serif; /* Fuente moderna */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
     }
+
+    .producto:hover {
+        transform: scale(1.05); /* Efecto de escala al pasar el mouse */
+        box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    }
+    
+    .producto h3 {
+        color: #007bff; /* Color del título en azul */
+        font-size: 1.4em; /* Tamaño más grande */
+        font-weight: bold; /* Negrita */
+        margin-bottom: 10px; /* Espaciado inferior */
+        text-transform: uppercase; /* Texto en mayúsculas */
+    }
+    
+    .producto p {
+        color: #555; /* Color del texto en gris */
+        font-size: 1em; /* Tamaño legible */
+        line-height: 1.5; /* Mejor espaciado entre líneas */
+    }
+    /* NUEVO*/
     .producto img {
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
     }
+
+    #precio{
+        background-color: #efb036;
+    }
     /* TODO: Agregar estilos responsive aquí (media queries) para diferentes
     tamaños de pantalla */
     
     footer {
-    background-color: #f0f0f0; /* Color base para el footer - Personalizar por alumnos */
+    background-color: #3B6790; /* Color base para el footer - Personalizar por alumnos */
     padding: 10px;
     text-align: center;
     position: static; /* Footer fijo en la parte inferior - Opcional, los alumnos pueden cambiar */
@@ -152,3 +183,45 @@ body {
 .boton:hover {
     background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
 }
+
+/* Estilos responsivos */
+@media (max-width: 768px) { /* Para móviles */
+    main {
+        display: grid;
+        grid-template-columns: 1fr; /* 1 columna en móviles */
+        justify-content: center;
+    }
+
+    .producto {
+        width: 90%; /* Ocupar casi todo el ancho disponible */
+    }
+
+    #image-carousel .splide__track {
+        height: 200px; /* Reducir altura del carrusel en móviles */
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) { /* Para tablets */
+    main {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+        gap: 20px; /* Espacio entre productos */
+    }
+
+    .producto {
+        width: auto; /* Se adapta al grid */
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) { /* Para PCs normales */
+    main {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 columnas en pantallas grandes */
+        gap: 20px;
+    }
+
+    .producto {
+        width: auto;
+    }
+}
+

@@ -1,6 +1,7 @@
 body {
+
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #E6F7FF;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -9,7 +10,7 @@ body {
     min-height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
     }
     .container {
-    background-color: #fff;
+    background-color: #3B6790;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);

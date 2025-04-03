@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <img src="${producto.imagen}" alt="${producto.nombre}">
                         <h2>${producto.nombre}</h2>
                         <p>${producto.descripcion}</p>
-                        <p>Precio: $${producto.precio.toFixed(2)}</p>
+                        <p id="precio" >Precio: $${producto.precio.toFixed(2)}</p>
                     </div>
                 </div>
             `;
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="${producto.imagen}" alt="${producto.nombre}">
                 <h3>${producto.nombre}</h3>
                 <p>${producto.descripcion}</p>
-                <p>Precio: $${precio.toFixed(2)}</p>
+                <p id="precio">Precio: $${precio.toFixed(2)}</p>
             `;
             contenedorProductos.appendChild(productoHTML);
         });
