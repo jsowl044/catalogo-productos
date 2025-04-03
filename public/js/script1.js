@@ -64,15 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Función para procesar el producto
     async function procesarProducto(productoId, imagenBase64) {
+        // Obtener el producto existente si es una edición
+        const productoExistente = productoId ? obtenerProducto(parseInt(productoId)) : null;
+    
         const nuevoProducto = {
             id: productoId ? productoId : undefined, // Usar ID existente si es edición, sino dejar que el servidor lo genere
             nombre: inputNombre.value.trim(), // Obtener el valor del campo
             descripcion: inputDescripcion.value.trim(), // Obtener el valor del campo
             precio: parseFloat(inputPrecio.value), // Convertir el precio a número
-            imagen: imagenBase64, // Base64 de la imagen
+            imagen: imagenBase64 || (productoExistente ? productoExistente.imagen : null), // Mantener la imagen existente si no se selecciona una nueva
         };
+    
         if (!productoId) {
-            delete nuevoProducto.id;
+            delete nuevoProducto.id; // Eliminar el campo `id` si es un nuevo producto
         }
     
         await guardarProducto(nuevoProducto);
@@ -83,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btnCancelar.style.display = 'none';
         btnGuardar.textContent = 'Guardar Producto';
     }
-
     btnCancelar.addEventListener('click', function() {
         formProducto.reset();
         previewImagenDiv.innerHTML = '';
@@ -107,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error('Error al cargar los productos');
             }
             const datos = await respuesta.json();
-            console.log('Datos cargados desde el servidor:', datos);
             productos = datos;
             mostrarProductos(); // Mostrar los productos en la página
         } catch (error) {
@@ -136,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function mostrarProductos() {
         listaProductosDiv.innerHTML = '';
-        console.log(productos.length); // Para depuración
         if (productos.length === 0) {
             listaProductosDiv.innerHTML = '<p>No hay productos en el catálogo.</p>';
             return;

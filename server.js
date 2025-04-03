@@ -1,20 +1,14 @@
 const express = require('express');
 const app = express();
 const port = 4000; // Puedes cambiar el puerto si lo deseas
-// Middleware para servir archivos estáticos desde la carpeta 'public'
-app.use(express.static('public'));
-app.use(express.json()); // Middleware para leer JSON
-// Endpoint API para obtener los productos desde productos.json
-app.get('/api/productos', (req, res) => {
-const productos = require('./productos.json'); // Cargar el archivo JSON
-res.json(productos); // Enviar los productos como respuesta JSON
-});
-
 const fs = require('fs');
 const path = require('path');
 
 const productosFile = path.join(__dirname, 'productos.json');
 
+// Middleware para servir archivos estáticos desde la carpeta 'public'
+app.use(express.static('public'));
+app.use(express.json()); // Middleware para leer JSON
 
 // Función para leer productos desde productos.json
 const leerProductos = () => {
@@ -27,7 +21,7 @@ const leerProductos = () => {
         return [];
     }
 };
-// Desacrivar cache
+// Desactivar cache
 app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');

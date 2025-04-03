@@ -2,29 +2,29 @@
   {
     "id": 1,
     "nombre": "Producto A",
-    "descripcion": "Descripción del Producto A. Este es un producto de ejemplo.",
-    "imagen": "public/assets/1.jpg",
-    "precio": 25.99
+    "descripcion": "Descripción del Producto A. El primer producto en el catálogo.",
+    "imagen": "assets/1.jpg",
+    "precio": 10.25
   },
   {
     "id": 2,
     "nombre": "Producto B",
-    "descripcion": "Descripción del Producto B. Otro producto para mostrar.",
-    "imagen": "public/assets/2.jpg",
-    "precio": 49.5
+    "descripcion": "Descripción del Producto B. Un segundo producto en el catálogo.",
+    "imagen": "assets/2.jpg",
+    "precio": 20.5
   },
   {
     "id": 3,
     "nombre": "Producto C",
     "descripcion": "Descripción del Producto C. Un tercer producto en el catálogo.",
-    "imagen": "public/assets/3.jpg",
+    "imagen": "assets/3.jpg",
     "precio": 15.75
   },
   {
     "id": 4,
     "nombre": "Producto D",
-    "descripcion": "Descripción del Producto D. Un cuarto producto para el catálogo.",
-    "imagen": "public/assets/.jpg",
-    "precio": 32.99
+    "descripcion": "Descripción del Producto D. Un cuarto producto en el catálogo.",
+    "imagen": "assets/4.jpg",
+    "precio": 30
   }
 ]
