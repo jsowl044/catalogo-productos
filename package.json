@@ -7,10 +7,11 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Julian Agudelo & Jaziel Garcia",
   "license": "ISC",
-  "description": "",
+  "description": "Catalogo de productos tecnologicos",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "mongoose": "^8.13.2"
   }
 }

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return productosJSON.filter(p => p.nombre.toLowerCase().includes(textoBusqueda));
         } else if (tipo === 'id') {
             // Búsqueda por ID
-            return productosJSON.find(p => String(p.id) === String(busqueda)) || null;
+            return productosJSON.find(p => String(p._id) === String(busqueda)) || null;
         }
     };
 
@@ -52,6 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Función para mostrar detalles del producto en un modal
     const mostrarDetallesProducto = (productoId) => {
+        // Eliminar cualquier modal abierto previamente
+        const modalAnterior = document.getElementById('modal-detalles');
+        if (modalAnterior) modalAnterior.remove();
         // Buscar el producto en el arreglo `productosJSON` por su ID
         const producto = buscarProductos(productoId, 'id');
         if (producto) {
@@ -76,12 +79,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const modal = document.getElementById('modal-detalles');
                 modal.remove(); // Eliminar el modal del DOM
             });
+            document.body.addEventListener('click', (event) => {
+                const modal = document.getElementById('modal-detalles');
+                if (modal && event.target === modal) {
+                    modal.remove();
+                }
+            });
         }
     };
     contenedorProductos.addEventListener('click', (event) => {
         const productoHTML = event.target.closest('.producto'); // Verificar si se hizo clic en un producto
         if (productoHTML) {
-            const productoId = parseInt(productoHTML.getAttribute('data-id')); // Obtener el ID del producto
+            const productoId = productoHTML.getAttribute('data-id'); // Obtener el ID del producto
             mostrarDetallesProducto(productoId); // Mostrar los detalles del producto
         }
     });
@@ -108,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productos.forEach(producto => {
             const productoHTML = document.createElement('div');
             productoHTML.classList.add('producto'); // Clase CSS para estilos
-            productoHTML.setAttribute('data-id', producto.id); // Agregar el atributo data-id
+            productoHTML.setAttribute('data-id', producto._id); // Agregar el atributo data-id
             const precio = typeof producto.precio === 'number' ? producto.precio : parseFloat(producto.precio) || 0;
             productoHTML.innerHTML = `
                 <img src="${producto.imagen}" alt="${producto.nombre}">
@@ -120,6 +129,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Seccion de Acerca de
+    const cargarAcercaDe = async () => {
+        try {
+            const res = await fetch('/api/company-info');
+            const data = await res.json();
+    
+            const footer = document.getElementById('footer-acerca');
+            footer.innerHTML = `
+                <section id="acerca">
+                    <h3>Misión</h3>
+                    <p>${data.mision}</p>
+                    <h3>Visión</h3>
+                    <p>${data.vision}</p>
+                    <h3>Integrantes</h3>
+                    <ul>
+                        ${data.integrantes.map(p => `<li>${p.nombre} ${p.apellido}</li>`).join('')}
+                    </ul>
+                </section>
+            `;
+        } catch (error) {
+            console.error('Error al cargar información de Acerca de:', error);
+        }
+    };
+    cargarAcercaDe();
     // Inicializar la carga de productos al cargar la página
     cargarProductos();
 });
