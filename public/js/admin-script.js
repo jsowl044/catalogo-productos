@@ -11,6 +11,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnGuardar = document.getElementById('btn-guardar');
     const btnCancelar = document.getElementById('btn-cancelar');
     let productos = [];
+
+    // ========= MENÚ HAMBURGUESA ==========
+    const menuToggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu");
+    const usuarioBtn = document.getElementById("usuario-btn");
+    const adminBtn = document.getElementById("admin-btn");
+    const adminForm = document.getElementById("admin-form");
+    const adminLoginBtn = document.getElementById("admin-login");
+
+    menuToggle.addEventListener("click", () => {
+        menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    });
+
+    usuarioBtn.addEventListener("click", () => {
+        window.location.href = "index.html";
+    });
+
+    adminBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevenir que el clic se propague
+        adminForm.classList.remove("hidden");
+    });
+    
+    // Si se hace clic fuera del formulario, se cierra
+    document.addEventListener("click", (e) => {
+        if (!adminForm.contains(e.target) && e.target !== adminBtn) {
+            adminForm.classList.add("hidden");
+        }
+    });
+    
+
+    adminLoginBtn.addEventListener("click", () => {
+        const user = document.getElementById("admin-user").value;
+        const pass = document.getElementById("admin-pass").value;
+
+        if (user && pass) {
+            window.location.href = "admin.html";
+        } else {
+            alert("Por favor ingresa usuario y contraseña.");
+        }
+    });
+        // ========= MENÚ HAMBURGUESA ==========
+
     inputImagen.addEventListener('change', function() {
         previewImagenDiv.innerHTML = ''; // Limpiar vista previa anterior
         if (this.files && this.files[0]) {
