@@ -5,7 +5,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputBusqueda = document.getElementById('buscador');
     let productosJSON = [];
 
-    c
+     // ========= MENÚ HAMBURGUESA ==========
+     const menuToggle = document.getElementById("menu-toggle");
+     const menu = document.getElementById("menu");
+     const usuarioBtn = document.getElementById("usuario-btn");
+     const adminBtn = document.getElementById("admin-btn");
+     const adminForm = document.getElementById("admin-form");
+     const adminLoginBtn = document.getElementById("admin-login");
+ 
+     menuToggle.addEventListener("click", () => {
+         menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+     });
+ 
+     usuarioBtn.addEventListener("click", () => {
+         window.location.href = "index.html";
+     });
+ 
+     adminBtn.addEventListener("click", () => {
+         adminForm.classList.toggle("hidden");
+     });
+ 
+     adminLoginBtn.addEventListener("click", () => {
+         const user = document.getElementById("admin-user").value;
+         const pass = document.getElementById("admin-pass").value;
+ 
+         if (user && pass) {
+             window.location.href = "admin.html";
+         } else {
+             alert("Por favor ingresa usuario y contraseña.");
+         }
+     });
+    
 
 
 
@@ -135,6 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="producto-dorso">
                     <p>${producto.descripcion}</p>
                     <p id="precio">Precio: $${precio.toFixed(2)}</p>
+                    <p id="rebaja">Existe rebaja: ${producto.rebaja ? "Sí" : "No"}</p>
+
+
                 </div>
             `;
         
@@ -153,12 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const footer = document.getElementById('footer-acerca');
             footer.innerHTML = `
                 <section id="acerca">
-                    <h3>Misión</h3>
-                    <p>${data.mision}</p>
-                    <h3>Visión</h3>
-                    <p>${data.vision}</p>
-                    <h3>Integrantes</h3>
-                    <ul>
+                    <h3 style="color: white">Misión</h3>
+                    <p style="color: white">${data.mision}</p>
+                    <h3 style="color: white">Visión</h3>
+                    <p style="color: white">${data.vision}</p>
+                    <h3 style="color: white">Integrantes</h3>
+                    <ul style="color: white;">
                         ${data.integrantes.map(p => `<li>${p.nombre} ${p.apellido}</li>`).join('')}
                     </ul>
                 </section>

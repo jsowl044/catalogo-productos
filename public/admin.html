@@ -14,7 +14,22 @@ scale=1.0">
     <header>
         
         <h1 style="color: #efb036">Gestion del catálogo</h1>
-        <!-- Hamburguesa -->
+        <!-- HAMBURGUESA -->
+<nav class="navbar">
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul class="menu" id="menu">
+      <li><button id="usuario-btn">Usuario</button></li>
+      <li>
+        <button id="admin-btn">Administrador</button>
+        <div id="admin-form" class="hidden">
+          <input type="text" id="admin-user" placeholder="Usuario" />
+          <input type="password" id="admin-pass" placeholder="Contraseña" />
+          <button id="admin-login">Ingresar</button>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <!-- HAMBURGUESA -->
          
         <!-- Botón para ir al Catálogo -->
         <nav>
