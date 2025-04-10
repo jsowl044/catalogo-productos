@@ -155,19 +155,15 @@ document.addEventListener('DOMContentLoaded', () => {
             productoElemento.classList.add('producto'); // Componente que gira
         
             const precio = typeof producto.precio === 'number' ? producto.precio : parseFloat(producto.precio) || 0;
-        
-            /*EN ESTA PARTE COMO LLAMO A LA DESCRIPCION Y AL PRECIO?*/
             productoElemento.innerHTML = `
                 <div class="producto-frente">
-                    <img src="${producto.imagen}" alt="${producto.nombre}">
+                    <img src="${producto.imagen ? producto.imagen : '/assets/default.jpg'}" alt="${producto.nombre}">
                     <h3>${producto.nombre}</h3>
                 </div>
                 <div class="producto-dorso">
                     <p>${producto.descripcion}</p>
                     <p id="precio">Precio: $${precio.toFixed(2)}</p>
                     <p id="rebaja">Existe rebaja: ${producto.rebaja ? "Sí" : "No"}</p>
-
-
                 </div>
             `;
         
