@@ -13,7 +13,24 @@ scale=1.0">
 </head>
 <body>
 <header>
-<h1 style="color: #efb036">Catálogo de Productos</h1>
+<h1 style ="color: #efb036">Catálogo de Productos</h1>
+<!-- HAMBURGUESA -->
+<nav class="navbar">
+  <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  <ul class="menu" id="menu">
+    <li><button id="usuario-btn">Usuario</button></li>
+    <li>
+      <button id="admin-btn">Administrador</button>
+      <div id="admin-form" class="hidden">
+        <input type="text" id="admin-user" placeholder="Usuario" />
+        <input type="password" id="admin-pass" placeholder="Contraseña" />
+        <button id="admin-login">Ingresar</button>
+      </div>
+    </li>
+  </ul>
+</nav>
+<!-- HAMBURGUESA -->
+
 <!-- Barra de búsqueda -->
 <input type="text" id="buscador" placeholder="Buscar productos...">
 <!-- Botón para ir al CRUD -->
@@ -33,6 +50,17 @@ scale=1.0">
 <!-- Aquí se insertarán los productos dinámicamente con JavaScript-->
 </main>
 <footer>
+  <div class="social-icons">
+    <a href="https://facebook.com" target="_blank">
+      <img style="height:40px;"src="./assets/facebook1.png" alt="Facebook" />
+    </a>
+    <a href="https://wa.me/1234567890" target="_blank">
+      <img style="height: 40px;"src="./assets/whatsapp.png" alt="WhatsApp" />
+    </a>
+    <a href="https://x.com" target="_blank">
+      <img  style="height: 40px;" src="./assets/x.png" alt="X" />
+    </a>
+  </div>
 <p style="color: white">© 2024 Mi Catálogo de Productos</p>
 <div id="footer-acerca"></div>
 </footer>

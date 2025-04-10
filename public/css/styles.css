@@ -23,37 +23,67 @@ body {
     }
 
     /* NUEVO*/
+    .producto-box {
+        perspective: 1000px; /* Necesario para el efecto 3D */
+        width: 260px;
+        height: 340px;
+        margin: 15px;
+    }
+    
     .producto {
-        border: 2px solid #007bff; /* Borde más llamativo con color azul */
-        border-radius: 10px; /* Bordes redondeados */
-        margin: 15px; /* Más espacio entre los productos */
-        padding: 20px; /* Más espacio interno */
-        text-align: center;
-        width: 260px; /* Ligera ampliación del ancho */
-        background-color: #f8f9fa; /* Fondo suave */
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
-        font-family: 'arial', sans-serif; /* Fuente moderna */
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
-    }
-
-    .producto:hover {
-        transform: scale(1.05); /* Efecto de escala al pasar el mouse */
-        box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.8s;
     }
     
-    .producto h3 {
-        color: #007bff; /* Color del título en azul */
-        font-size: 1.4em; /* Tamaño más grande */
-        font-weight: bold; /* Negrita */
-        margin-bottom: 10px; /* Espaciado inferior */
-        text-transform: uppercase; /* Texto en mayúsculas */
+    .producto-box:hover .producto {
+        transform: rotateY(180deg);
     }
     
-    .producto p {
-        color: #555; /* Color del texto en gris */
-        font-size: 1em; /* Tamaño legible */
-        line-height: 1.5; /* Mejor espaciado entre líneas */
+    /* Caras del producto */
+    .producto-frente,
+    .producto-dorso {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: #f8f9fa;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
+    
+    .producto-frente {
+        z-index: 2;
+    }
+    
+    .producto-dorso {
+        transform: rotateY(180deg);
+        background-color: #ffffff;
+    }
+    
+    .producto-dorso p {
+        margin: 10px 0;
+        color: #333;
+        font-size: 1em;
+    }
+    
+    /* Estilo del precio en el dorso */
+    .producto-dorso #precio {
+        background-color: #efb036;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        color: #000;
+    }
+    
     /* NUEVO*/
     .producto img {
     max-width: 100%;
@@ -75,6 +105,91 @@ body {
     bottom: 0;
     width: 100%;
     }
+/*HAMBURGUESA*/
+.navbar {
+    background-color: #3B6790;
+    color: #fff;
+    padding: 10px 20px;
+    position: relative;
+  }
+  
+  .menu-toggle {
+    font-size: 24px;
+    cursor: pointer;
+    display: block;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: none;
+    flex-direction: column;
+    background-color: #3B6790;
+  }
+  
+  .menu li {
+    margin: 10px 0;
+    text-align: left;
+  }
+  
+  .menu button {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  .menu button:hover {
+    background-color: #3B6790;
+  }
+  
+  #admin-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  
+  #admin-form input {
+    margin: 5px 0;
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  #admin-form button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 8px;
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  
+  #admin-form button:hover {
+    background-color: #004999;
+  }
+  
+  .hidden {
+    display: none;
+  }
+/*HAMBURGUESA*/
+.producto-box {
+    perspective: 1000px;
+    width: 260px;
+    height: 340px;
+    margin: 15px;
+    cursor: pointer;
+}
+
+.producto {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+}
 
 /* Estilo del input de búsqueda */
 #buscador {
