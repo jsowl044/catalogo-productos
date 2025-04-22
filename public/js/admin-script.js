@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputDescripcion = document.getElementById('descripcion');
     const inputPrecio = document.getElementById('precio');
     const inputImagen = document.getElementById('imagen');
-    const inputRebaja = document.getElementById('rebaja').checked
+    const inputRebaja = document.getElementById('rebaja');
     const previewImagenDiv = document.getElementById('preview-imagen');
     const listaProductosDiv = document.getElementById('lista-productos');
     const btnGuardar = document.getElementById('btn-guardar');
@@ -66,17 +66,18 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.readAsDataURL(this.files[0]); // Lee el archivo como URL de datos (Base64)
         }
     });
+
     // Manejar el evento de envío del formulario
     formProducto.addEventListener('submit', async function (event) {
         event.preventDefault();
-    
+
         const productoId = inputProductoId.value;
         const nombre = inputNombre.value;
         const descripcion = inputDescripcion.value;
         const precio = parseFloat(inputPrecio.value);
         const imagenFile = inputImagen.files[0];
         let imagenBase64 = null;
-    
+
         // Validación de los campos
         if (!nombre) {
             alert('Por favor, ingrese un nombre para el producto.');
@@ -90,9 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Por favor, ingrese un precio válido (mayor o igual a 0).');
             return;
         }
-    
+
         // Manejo de la imagen
         if (imagenFile) {
+            const imagenMax = 1 * 1024 * 1024; // 1 MB
+            if (imagenFile.size > imagenMax) {
+                alert('La imagen es demasiado grande. Debe ser menor a 1 MB.');
+                return;
+            }
             const reader = new FileReader();
             reader.onloadend = async function () {
                 imagenBase64 = reader.result;
@@ -190,8 +196,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const productoDiv = document.createElement('div');
             productoDiv.classList.add('producto-item');
             const imagenElemento = document.createElement('img');
+             
             
-            imagenElemento.src = producto.imagen || 'img/default-producto.png'; // Imagen por defecto si no hay imagen
+            imagenElemento.src = producto.imagen || '/assets/default.jpg'; // Imagen por defecto si no hay imagen
             
             imagenElemento.alt = producto.nombre;
             imagenElemento.classList.add('producto-imagen');
@@ -211,7 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
             accionesDiv.innerHTML = `
             
             <button class="editar" data-id="${producto._id}">Editar</button>
-            
             <button class="eliminar" data-id="${producto._id}">Eliminar</button>`;
             
             accionesDiv.querySelector('.editar').addEventListener('click', () =>
