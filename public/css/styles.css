@@ -110,30 +110,39 @@ body {
     background-color: #3B6790;
     color: #fff;
     padding: 10px 20px;
-    position: relative;
-  }
-  
-  .menu-toggle {
+    position: fixed; /* Changed from relative to fixed */
+    left: 0; /* Align to the left edge */
+    top: 0; /* Align to the top */
+    z-index: 1000; /* Ensure it stays on top of other content */
+    width: auto; /* Let it take necessary width */
+}
+
+.menu-toggle {
     font-size: 24px;
     cursor: pointer;
     display: block;
-  }
-  
-  .menu {
+}
+
+.menu {
     list-style: none;
     padding: 0;
     margin: 10px 0 0;
     display: none;
     flex-direction: column;
     background-color: #3B6790;
-  }
-  
-  .menu li {
+    position: absolute; /* Position absolutely inside navbar */
+    left: 0; /* Align menu to the left */
+    min-width: 200px; /* Ensure menu has a minimum width */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+}
+
+.menu li {
     margin: 10px 0;
     text-align: left;
-  }
-  
-  .menu button {
+    padding: 0 10px; /* Add some padding for better spacing */
+}
+
+.menu button {
     width: 100%;
     background: none;
     border: none;
@@ -141,40 +150,40 @@ body {
     padding: 10px;
     cursor: pointer;
     text-align: left;
-  }
-  
-  .menu button:hover {
-    background-color: #3B6790;
-  }
-  
-  #admin-form {
+}
+
+.menu button:hover {
+    background-color: #2a4d6e; /* Slightly darker blue on hover */
+}
+
+#admin-form {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-  }
-  
-  #admin-form input {
+}
+
+#admin-form input {
     margin: 5px 0;
     padding: 8px;
     font-size: 14px;
-  }
-  
-  #admin-form button {
+}
+
+#admin-form button {
     background-color: #0066cc;
     color: white;
     border: none;
     padding: 8px;
     margin-top: 5px;
     cursor: pointer;
-  }
-  
-  #admin-form button:hover {
+}
+
+#admin-form button:hover {
     background-color: #004999;
-  }
-  
-  .hidden {
+}
+
+.hidden {
     display: none;
-  }
+}
 /*HAMBURGUESA*/
 .producto-box {
     perspective: 1000px;

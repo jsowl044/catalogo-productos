@@ -191,9 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3 style="color: white">Visión</h3>
                     <p style="color: white">${data.vision}</p>
                     <h3 style="color: white">Integrantes</h3>
-                    <ul style="color: white;">
-                        ${data.integrantes.map(p => `<li>${p.nombre} ${p.apellido}</li>`).join('')}
-                    </ul>
+                        ${data.integrantes.map(p => `<p style="color: white">${p.nombre} ${p.apellido}</p p style="color: white">`).join('')}
                 </section>
             `;
         } catch (error) {
