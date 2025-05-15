@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (imagenFile) {
             const imagenMax = 1 * 1024 * 1024; // 1 MB
             if (imagenFile.size > imagenMax) {
-                alert('La imagen es demasiado grande. Debe ser menor a 1 MB.');
+                 alert('La imagen es demasiado grande. Debe ser menor a 1 MB.');
                 return;
             }
             const reader = new FileReader();
@@ -115,9 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function procesarProducto(productoId, imagenBase64) {
         // Obtener el producto existente si es una edición
         const productoExistente = productoId ? obtenerProducto(productoId) : null;
-    
         const nuevoProducto = {
-            _id: productoId ? productoId : undefined, // Usar ID existente si es edición, sino dejar que el servidor lo genere
+            id: productoId ? productoId : undefined, // Usar ID existente si es edición, sino dejar que el servidor lo genere
             nombre: inputNombre.value.trim(), // Obtener el valor del campo
             descripcion: inputDescripcion.value.trim(), // Obtener el valor del campo
             precio: parseFloat(inputPrecio.value), // Convertir el precio a número
@@ -126,9 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     
         if (!productoId) {
-            delete nuevoProducto._id; // Eliminar el campo `id` si es un nuevo producto
+            delete nuevoProducto.id; // Eliminar el campo `id` si es un nuevo producto
         }
-    
+        
         await guardarProducto(nuevoProducto);
         cargarProductos();
         formProducto.reset();
@@ -167,10 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }   
     } 
     async function guardarProducto(producto) {
+        console.log('Guardando producto:', producto);
+        producto.rebaja = producto.rebaja ? 1 : 0; // Convertir a 1 o 0 para la base de datos
         try {
-            const metodo = producto._id ? 'PUT' : 'POST'; // Usar PUT si el producto tiene ID, POST si es nuevo
-            const url = producto._id
-                ? `/api/productos/${producto._id}` // Ruta para actualizar un producto existente
+            const metodo = producto.id ? 'PUT' : 'POST'; // Usar PUT si el producto tiene ID, POST si es nuevo
+            const url = producto.id
+                ? `/api/productos/${producto.id}` // Ruta para actualizar un producto existente
                 : '/api/productos'; // Ruta para agregar un nuevo producto
             const respuesta = await fetch(url, {
                 method: metodo,
@@ -193,6 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         productos.forEach(producto => {
+            const precio = typeof producto.precio === 'string' ? parseFloat(producto.precio) : producto.precio;
+            const precioValido = typeof precio === 'number' ? precio : 0;
             const productoDiv = document.createElement('div');
             productoDiv.classList.add('producto-item');
             const imagenElemento = document.createElement('img');
@@ -211,20 +214,20 @@ document.addEventListener('DOMContentLoaded', () => {
             descripcion">${producto.descripcion}</p>
             
             <p class="producto-precio">Precio:
-            $${producto.precio.toFixed(2)}</p>
+            $${precioValido.toFixed(2)}</p>
             `;
             const accionesDiv = document.createElement('div');
             accionesDiv.classList.add('producto-acciones');
             accionesDiv.innerHTML = `
             
-            <button class="editar" data-id="${producto._id}">Editar</button>
-            <button class="eliminar" data-id="${producto._id}">Eliminar</button>`;
+            <button class="editar" data-id="${producto.id}">Editar</button>
+            <button class="eliminar" data-id="${producto.id}">Eliminar</button>`;
             
             accionesDiv.querySelector('.editar').addEventListener('click', () =>
-            editarProducto(producto._id));
+            editarProducto(producto.id));
             
             accionesDiv.querySelector('.eliminar').addEventListener('click', () =>
-            eliminarProducto(producto._id));
+            eliminarProducto(producto.id));
             productoDiv.appendChild(imagenElemento);
             productoDiv.appendChild(detallesDiv);
             productoDiv.appendChild(accionesDiv);
@@ -232,20 +235,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     function obtenerProducto(id) {
-        return productos.find(producto => producto._id === id);
+        return productos.find(producto => String(producto.id) === String(id));
     }
     function editarProducto(id) {
         const producto = obtenerProducto(id);
         if (producto) {
-            inputProductoId.value = producto._id;
+            inputProductoId.value = producto.id;
             inputNombre.value = producto.nombre;
             inputDescripcion.value = producto.descripcion;
             inputPrecio.value = producto.precio;
-            if (producto.imagen && producto.imagen.startsWith('data:image')) { // Si es Base64, mostrar en preview
-                previewImagenDiv.innerHTML = `<img src="${producto.imagen}" alt="Imagen actual del producto">`;
-            } else {
-                previewImagenDiv.innerHTML = ''; // Limpiar si no es Base64 o no hay imagen y se va a editar
-            }
+            previewImagenDiv.innerHTML = `<img src="${producto.imagen}" alt="Imagen actual del producto">`;
             btnGuardar.textContent = 'Actualizar Producto';
             btnCancelar.style.display = 'inline-block'; // Mostrar botón cancelar
             window.scrollTo({ top: 0, behavior: 'smooth' }); // Opcional: scroll al formulario
@@ -267,5 +266,98 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(error);
         }
     }
-    cargarProductos(); // Cargar productos al inicio
+    // *** INICIO SECCIÓN "ACERCA DE" ***
+    let companyInfo = { integrantes: [] }; // Inicializar con un array de integrantes vacío
+
+   const cargarAcercaDe = async () => {
+    try {
+     const res = await fetch('/api/company-info');
+     const data = await res.json();
+     companyInfo = data || { mision: '', vision: '', integrantes: [] }; // Manejar el caso de que no haya información
+     mostrarAcercaDe(); // Llamar a la función para mostrar la información
+    } catch (error) {
+     console.error('Error al cargar información de Acerca de:', error);
+    }
+   };
+
+   const mostrarAcercaDe = () => {
+    const footer = document.getElementById('footer-acerca');
+    footer.innerHTML = `
+        <section id="acerca">
+         <h3 style="color: white">Misión</h3>
+         <p id="mision" style="color: white">${companyInfo.mision}</p>
+         <h3 style="color: white">Visión</h3>
+         <p id="vision" style="color: white">${companyInfo.vision}</p>
+         <h3 style="color: white">Integrantes</h3>
+         <ul style="color: white;">
+          ${companyInfo.integrantes.map(p => `<li id="integrante-${companyInfo.integrantes.indexOf(p)}" style="color: white;">${p.nombre} ${p.apellido}</li>`).join('')}
+         </ul>
+         <button id="editar-acerca-de">Editar Información</button>
+        </section>
+       `;
+
+    // Agregar el formulario de edición (inicialmente oculto)
+    const formularioEdicion = document.createElement('div');
+    formularioEdicion.id = 'formulario-edicion-acerca';
+    formularioEdicion.style.display = 'none'; // Ocultar inicialmente
+    formularioEdicion.innerHTML = `
+        <label for="editar-mision">Misión:</label><textarea id="editar-mision">${companyInfo.mision}</textarea><br>
+        <label for="editar-vision">Visión:</label><textarea id="editar-vision">${companyInfo.vision}</textarea><br>
+        <label for="editar-integrantes">Integrantes (separados por comas):</label><textarea id="editar-integrantes">${companyInfo.integrantes.map(p => `${p.nombre} ${p.apellido}`).join(', ')}</textarea><br>
+        <button id="guardar-acerca-de">Guardar Cambios</button>
+       `;
+    footer.appendChild(formularioEdicion);
+
+    // Event listeners para mostrar/ocultar el formulario y guardar los cambios
+    const botonEditar = document.getElementById('editar-acerca-de');
+    botonEditar.addEventListener('click', () => {
+     formularioEdicion.style.display = 'block'; // Mostrar el formulario
+    });
+
+    const botonGuardar = document.getElementById('guardar-acerca-de');
+    botonGuardar.addEventListener('click', async () => {
+     const nuevaMision = document.getElementById('editar-mision').value;
+     const nuevaVision = document.getElementById('editar-vision').value;
+     const nuevosIntegrantesTexto = document.getElementById('editar-integrantes').value;
+     const nuevosIntegrantesArray = nuevosIntegrantesTexto.split(',').map(nombreCompleto => {
+      const [nombre = '', apellido = ''] = nombreCompleto.trim().split(' ');
+      return { nombre: nombre.trim(), apellido: apellido.trim() };
+     }).filter(integrante => integrante.nombre || integrante.apellido); // Filtrar entradas vacías
+
+     const datosAGuardar = {
+      mision: nuevaMision,
+      vision: nuevaVision,
+      integrantes: nuevosIntegrantesArray
+     };
+
+    try {
+        const respuesta = await fetch('/api/company-info', {
+            method: 'POST', // Cambiado a POST
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datosAGuardar)
+        });
+        if (respuesta.ok) {
+            // Recargar la información para mostrar los cambios
+            cargarAcercaDe();
+            formularioEdicion.style.display = 'none'; // Ocultar el formulario
+        } else {
+            console.error('Error al guardar la información de la compañía');
+            const errorData = await respuesta.json();
+            console.error(errorData);
+            alert('Error al guardar la información. Por favor, inténtalo de nuevo.');
+        }
+    } catch (error) {
+        console.error('Error al enviar la petición POST:', error);
+        alert('Error de conexión al guardar la información.');
+    }
+    });
+   };
+
+    // *** FIN SECCIÓN "ACERCA DE" MODIFICADA ***
+
+    cargarAcercaDe();
+    // Inicializar la carga de productos al cargar la página
+    cargarProductos();
 });
