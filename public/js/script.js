@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return productosJSON.filter(p => p.nombre.toLowerCase().includes(textoBusqueda));
         } else if (tipo === 'id') {
             // Búsqueda por ID
-            return productosJSON.find(p => String(p._id) === String(busqueda)) || null;
+            return productosJSON.find(p => String(p.id) === String(busqueda)) || null;
         }
     };
 
@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalAnterior) modalAnterior.remove();
         // Buscar el producto en el arreglo `productosJSON` por su ID
         const producto = buscarProductos(productoId, 'id');
+        console.log(producto);
         if (producto) {
             // Crear un modal o contenedor para mostrar los detalles
             const modalHTML = `
@@ -157,8 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
             const productoElemento = document.createElement('div');
             productoElemento.classList.add('producto'); // Componente que gira
+            productoElemento.setAttribute('data-id', producto.id); // Asignar el ID del producto al elemento
         
             const precio = typeof producto.precio === 'number' ? producto.precio : parseFloat(producto.precio) || 0;
+            ;
             productoElemento.innerHTML = `
                 <div class="producto-frente">
                     <img src="${producto.imagen ? producto.imagen : '/assets/default.jpg'}" alt="${producto.nombre}">
@@ -191,7 +194,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3 style="color: white">Visión</h3>
                     <p style="color: white">${data.vision}</p>
                     <h3 style="color: white">Integrantes</h3>
-                        ${data.integrantes.map(p => `<p style="color: white">${p.nombre} ${p.apellido}</p p style="color: white">`).join('')}
+                    <ul style="color: white;">
+                        ${data.integrantes.map(p => `<li>${p.nombre} ${p.apellido}</li>`).join('')}
+                    </ul>
                 </section>
             `;
         } catch (error) {
