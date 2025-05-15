@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función para cargar los productos desde el servidor (API)
     const cargarProductos = async () => {
         try {
-            const respuesta = await fetch('/api/productos'); // Petición al backend
+            const respuesta = await fetch('/api/productos/mongo'); // Petición al backend
             productosJSON = await respuesta.json(); // Convertir la respuesta a JSON
             mostrarProductos(productosJSON); // Mostrar los productos en la página
             generarCarrusel(productosJSON); // Generar el carrusel con las imágenes de los productos
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Seccion de Acerca de
     const cargarAcercaDe = async () => {
         try {
-            const res = await fetch('/api/company-info');
+            const res = await fetch('/api/company-info/mongo');
             const data = await res.json();
     
             const footer = document.getElementById('footer-acerca');

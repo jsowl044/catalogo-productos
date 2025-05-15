@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function cargarProductos() {
         try {
             const timestamp = new Date().getTime();
-            const respuesta = await fetch(`/api/productos?t=${timestamp}`, { 
+            const respuesta = await fetch(`/api/productos/mongo?t=${timestamp}`, { 
                 method: 'GET',
                 headers: {
                     'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -170,8 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const metodo = producto._id ? 'PUT' : 'POST'; // Usar PUT si el producto tiene ID, POST si es nuevo
             const url = producto._id
-                ? `/api/productos/${producto._id}` // Ruta para actualizar un producto existente
-                : '/api/productos'; // Ruta para agregar un nuevo producto
+                ? `/api/productos/mongo${producto._id}` // Ruta para actualizar un producto existente
+                : '/api/productos/mongo'; // Ruta para agregar un nuevo producto
             const respuesta = await fetch(url, {
                 method: metodo,
                 headers: {
@@ -206,13 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
             detallesDiv.classList.add('producto-detalles');
             detallesDiv.innerHTML = `
             <h3 class="producto-nombre">${producto.nombre}</h3>
-            
-            <p class="producto-
-            descripcion">${producto.descripcion}</p>
-            
+            <p class="producto-descripcion">${producto.descripcion}</p>
             <p class="producto-precio">Precio:
-            $${producto.precio.toFixed(2)}</p>
-            `;
+            $${producto.precio.toFixed(2)}</p>`;
             const accionesDiv = document.createElement('div');
             accionesDiv.classList.add('producto-acciones');
             accionesDiv.innerHTML = `
@@ -254,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function eliminarProducto(id) {
         if (!confirm("¿Estás seguro de que deseas eliminar este producto?")) return;
         try {
-            const respuesta = await fetch(`/api/productos/${id}`, {
+            const respuesta = await fetch(`/api/productos/mongo${id}`, {
                 method: 'DELETE',
             });
     
