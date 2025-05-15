@@ -41,15 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para generar el carrusel de imágenes
     const generarCarrusel = (productos) => {
-        carrusel.innerHTML = ''; // Limpiar el carrusel antes de agregar imágenes
-        productos.forEach(producto => {
-            if (producto.imagen) {
-                const slide = document.createElement('li');
-                slide.classList.add('splide__slide');
-                slide.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}">`;
-                carrusel.appendChild(slide);
-            }
-        });
+    carrusel.innerHTML = ''; // Limpiar el carrusel antes de agregar imágenes
+    productos.forEach(producto => {
+        if (producto.imagen) {
+            const slide = document.createElement('li');
+            slide.classList.add('splide__slide');
+            // Added wrapper div for better control
+            slide.innerHTML = `
+                <div class="slide-image-container">
+                    <img src="${producto.imagen}" alt="${producto.nombre}" class="slide-image">
+                </div>`;
+            carrusel.appendChild(slide);
+        }
+    });
 
         // Inicializar el carrusel con Splide.js
         new Splide('#image-carousel', {
