@@ -37,7 +37,7 @@
 | Product Database     | MongoDB                             |
 | Site Content Database| SQLite                              |
 | Frontend             | HTML, CSS, JavaScript (no framework)|
-| Image Uploads        | Multer *(update if you're using something else)* |
+| Image Uploads        | Multer|
 
 ---
 
@@ -90,8 +90,9 @@ npm install
 Create a `.env` file in the project root:
 
 ```env
+EXAMPLE:
 PORT=3000
-MONGO_URI=mongodb://localhost:27017/product-catalog
+MONGO_URI=mongodb://localhost:27017/product-catalog 
 SQLITE_DB_PATH=./data/footer.db
 ```
 
@@ -105,27 +106,11 @@ The app will be available at `http://localhost:3000`.
 
 ---
 
-## 📁 Project Structure
-
-```
-├── config/           # Database connections (MongoDB & SQLite)
-├── models/           # MongoDB schemas / SQLite table definitions
-├── routes/           # Express route handlers
-├── public/           # Static assets (CSS, JS, uploaded images)
-├── views/            # Server-rendered templates
-├── .env
-└── server.js
-```
-
-> Adjust this tree to match your actual folder layout.
-
----
-
 ## 🗺️ Roadmap
 
-- [ ] Complete backend authentication (login/session handling)
-- [ ] Protected admin routes for catalog management
-- [ ] Product search and filtering
+- [ ok ] Complete backend authentication (login/session handling)
+- [ ok ] Protected admin routes for catalog management
+- [ ok ] Product search and filtering
 - [ ] Pagination for large catalogs
 - [ ] Automated tests
 - [ ] Deployment pipeline
@@ -134,7 +119,7 @@ The app will be available at `http://localhost:3000`.
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the [issues page](https://github.com/<your-username>/<your-repo>/issues) or open a pull request.
+Contributions, issues, and feature requests are welcome. Feel free to check the issues page or open a pull request.
 
 ---
 
@@ -143,8 +128,3 @@ Contributions, issues, and feature requests are welcome. Feel free to check the 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-## 👤 Author
-
-**Your Name**
-- GitHub: [@your-username](https://github.com/<your-username>)
