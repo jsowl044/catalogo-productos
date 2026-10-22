@@ -1,67 +1,109 @@
 # 🛍️ Product Catalog App
 
-> A full-stack product catalog system built with **Express**, **Node.js**, **MongoDB**, and **SQLite** — combining a flexible product database with lightweight structured storage for site content.
+> A small full-stack product catalog: a public storefront with search, an image carousel and flip cards, an admin page to manage products, and an Express REST API backed by SQLite.
 
-![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-Product%20Data-47A248?logo=mongodb&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-Site%20Content-003B57?logo=sqlite&logoColor=white)
-![Status](https://img.shields.io/badge/status-active%20development-yellow)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![SQLite](https://img.shields.io/badge/SQLite-better--sqlite3-003B57?logo=sqlite&logoColor=white)
 
 ---
 
 ## 📖 Overview
 
-**Product Catalog App** is a web application for managing and displaying a catalog of products, including image uploads and sale/promotion flags. It's built on a **polyglot persistence architecture**: MongoDB handles the flexible, evolving structure of product data, while SQLite manages lightweight, structured content like the site footer — keeping each database doing what it's best at.
+**Product Catalog App** shows a catalog of electronics to visitors and lets an administrator create, edit and delete products from a separate page. The backend is an Express server that exposes a JSON API and stores everything in a local SQLite file, so there is no database to install: the file is created and filled with sample products the first time the app starts.
+
+The frontend is plain HTML, CSS and JavaScript (no framework, no build step) served by the same Express server.
 
 ---
 
 ## ✨ Features
 
-- 🖼️ **Product Management** — Add products with images, descriptions, and pricing
-- 🏷️ **Sale Flagging** — Mark any product as "on sale" with a simple toggle, making promotions easy to manage
-- 🗂️ **Polyglot Persistence** — MongoDB for flexible, schema-less product data; SQLite for fast, structured site content (footer)
-- 🍔 **Responsive Hamburger Navigation** — Clean, mobile-friendly menu system
-- 🔐 **Authentication UI** — Front-end login/menu scaffold is complete and ready for backend integration (see [Roadmap](#-roadmap))
-- ⚡ **Lightweight Stack** — No heavy front-end framework required; built with plain Express-rendered views for speed and simplicity
+**Public catalog (`/`)**
+
+- 🃏 **Flip cards** — each product shows its image and name; on hover the card flips to show the description, the price and whether it is on sale
+- 🔎 **Live search** — filters the products by name as you type
+- 🪟 **Detail modal** — click a product to see its image, description and price
+- 🎠 **Image carousel** — an auto-playing carousel built from the product images, with [Splide](https://splidejs.com/)
+- 🍔 **Hamburger menu** — responsive navigation; the layout adapts to mobile, tablet and desktop widths
+- 🏢 **About section** — the footer shows the company's mission, vision and team members, read from the API
+
+**Admin page (`/admin.html`)**
+
+- ➕ **Create and edit products** — name, description, price and image, with an image preview
+- 🏷️ **Sale flag** — mark a product as "on sale" with a checkbox
+- 🗑️ **Delete products** — with a confirmation prompt
+- ✏️ **Edit the About section** — mission, vision and team members
+
+**Backend**
+
+- 🔌 **REST API** with Express for products and company information
+- 🗄️ **SQLite storage** through `better-sqlite3`; tables are created automatically and seeded with sample data on first run
+- ⚙️ **Configuration through `.env`** (port, database path and an optional MongoDB connection)
 
 ---
 
 ## 🧱 Tech Stack
 
-| Layer               | Technology                          |
-|---------------------|--------------------------------------|
-| Runtime              | Node.js                             |
-| Framework            | Express.js                          |
-| Product Database     | MongoDB                             |
-| Site Content Database| SQLite                              |
-| Frontend             | HTML, CSS, JavaScript (no framework)|
-| Image Uploads        | Multer|
+| Layer | Technology |
+|---|---|
+| Runtime | Node.js |
+| Server | Express 4 |
+| Database | SQLite (`better-sqlite3`) |
+| Frontend | HTML, CSS and JavaScript, no framework |
+| Carousel | Splide 4, loaded from a CDN |
+| Configuration | `dotenv` |
+| Optional | MongoDB connection through Mongoose (see [Notes on MongoDB](#notes-on-mongodb)) |
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-┌────────────────────┐
-│      Client         │
-│ (Hamburger menu,    │
-│  catalog views)      │
-└─────────┬────────────┘
-          │
-┌─────────▼────────────┐
-│   Express.js Server   │
-└───────┬───────┬───────┘
-        │       │
-┌───────▼───┐ ┌─▼─────────┐
-│  MongoDB   │ │  SQLite    │
-│ Product    │ │ Footer /   │
-│ Catalog    │ │ Site Data  │
-└────────────┘ └────────────┘
+┌─────────────────────────┐
+│ Browser                 │
+│  index.html  admin.html │
+└────────────┬────────────┘
+             │ fetch (JSON)
+┌────────────▼────────────┐
+│ Express server          │
+│  /api/productos         │
+│  /api/company-info      │
+│  static files (public/) │
+└────────────┬────────────┘
+             │
+┌────────────▼────────────┐
+│ SQLite (db/sqlite.js)   │
+│  products               │
+│  company_info           │
+│  integrantes            │
+└─────────────────────────┘
 ```
 
-Using two databases side by side lets the app store product data flexibly (documents that can vary as the catalog grows) while keeping simple, structured content in a lightweight file-based database — no extra infrastructure needed for small, static pieces like the footer.
+Product images are stored in the `imagen` column of the `products` table. The sample products point to files in `public/assets/`; products created from the admin page store the image itself as a base64 data URL.
+
+### API
+
+| Method | Route | What it does |
+|---|---|---|
+| `GET` | `/api/productos` | List all products |
+| `POST` | `/api/productos` | Create a product |
+| `PUT` | `/api/productos/:id` | Update a product (`404` if it doesn't exist) |
+| `DELETE` | `/api/productos/:id` | Delete a product (`404` if it doesn't exist) |
+| `GET` | `/api/company-info` | Mission, vision and team members (`null` if empty) |
+| `POST` | `/api/company-info` | Replace the mission, vision and team members |
+
+A product looks like this:
+
+```json
+{
+  "id": 3,
+  "nombre": "Teclado mecanico",
+  "descripcion": "Teclado con luces RGB especial para juegos",
+  "imagen": "assets/3.jpg",
+  "precio": 56,
+  "rebaja": true
+}
+```
 
 ---
 
@@ -72,7 +114,6 @@ Using two databases side by side lets the app store product data flexibly (docum
 - [Node.js](https://nodejs.org/) v20 or higher
 - npm
 - SQLite is included through the `better-sqlite3` npm package, so there is nothing else to install
-- Optional: a MongoDB instance (local or [MongoDB Atlas](https://www.mongodb.com/atlas)), only needed if you set `MONGO_URI`
 
 ### Installation
 
@@ -103,29 +144,57 @@ Every variable is optional. To change the defaults, copy `.env.example` to `.env
 npm start
 ```
 
-The app will be available at `http://localhost:3000`. On the first run the SQLite database is created automatically and filled with a few sample products.
+The app will be available at `http://localhost:3000` (the catalog) and `http://localhost:3000/admin.html` (the admin page). On the first run the SQLite database is created automatically and filled with a few sample products.
 
 ---
 
+## 📁 Project Structure
+
+```
+server.js                    Express app: middleware, routes, optional MongoDB connection
+db/sqlite.js                 SQLite connection, table creation and sample data
+routes/productosRouter.js    Products API
+routes/companyInfoRouter.js  Company information API
+models/                      Mongoose schemas (not used by the routes yet)
+public/index.html            Public catalog
+public/admin.html            Admin page
+public/js/                   Frontend scripts for each page
+public/css/                  Styles
+public/assets/               Sample product images and icons
+.env.example                 Template for the optional environment variables
+```
+
+---
+
+## 📝 Notes on MongoDB
+
+The project started with MongoDB in mind, and the repository still contains Mongoose schemas for products and company information in `models/`. The API does not use them: products and company information are stored in SQLite. If you set `MONGO_URI`, the server connects to that database, which is a starting point for moving the data there; without it, the connection is skipped.
+
+---
+
+## ⚠️ Known Limitations
+
+This project was built to practice a full-stack workflow, not to run in production. Before using it for anything real:
+
+- **There is no real authentication.** The login form in the menu only checks that the username and password fields are not empty, and the API accepts create, update and delete requests from anyone.
+- Images are saved as base64 text inside the database and the form limits them to 1 MB. A file storage service would scale better.
+- The carousel library loads from a CDN, so the carousel needs an internet connection.
+- Search only matches product names, and the catalog has no pagination.
+- The social media links in the footer are placeholders.
+- There are no automated tests.
+
 ## 🗺️ Roadmap
 
-- [ ok ] Complete backend authentication (login/session handling)
-- [ ok ] Protected admin routes for catalog management
-- [ ok ] Product search and filtering
+- [ ] Real authentication and protected admin routes
+- [ ] Server-side validation of product data
+- [ ] Image upload to file storage instead of base64
+- [ ] Search by price and filter by sale
 - [ ] Pagination for large catalogs
 - [ ] Automated tests
 - [ ] Deployment pipeline
 
 ---
 
-## 🤝 Contributing
+## 👥 Authors
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page or open a pull request.
-
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
+Built by Julian Agudelo and Jaziel Garcia.
