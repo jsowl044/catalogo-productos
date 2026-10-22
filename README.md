@@ -69,17 +69,17 @@ Using two databases side by side lets the app store product data flexibly (docum
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v18 or higher
+- [Node.js](https://nodejs.org/) v20 or higher
 - npm
-- A running MongoDB instance (local or [MongoDB Atlas](https://www.mongodb.com/atlas))
-- SQLite3 (bundled via npm package, no separate install needed)
+- SQLite is included through the `better-sqlite3` npm package, so there is nothing else to install
+- Optional: a MongoDB instance (local or [MongoDB Atlas](https://www.mongodb.com/atlas)), only needed if you set `MONGO_URI`
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/jsowl044/catalogo-productos.git
+cd catalogo-productos
 
 # Install dependencies
 npm install
@@ -87,14 +87,15 @@ npm install
 
 ### Environment Variables
 
-Create a `.env` file in the project root:
+Every variable is optional. To change the defaults, copy `.env.example` to `.env` and edit it (the `.env` file is ignored by git, so credentials never end up in the repository):
 
-```env
-EXAMPLE:
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/product-catalog 
-SQLITE_DB_PATH=./data/footer.db
-```
+| Variable | Default | Purpose |
+|---|---|---|
+| `PORT` | `3000` | Port the server listens on |
+| `SQLITE_DB_PATH` | `db/products.db` | Where the SQLite file is created |
+| `MONGO_URI` | *(unset)* | MongoDB connection string. If unset, the MongoDB connection is skipped |
+
+> **Never commit a real connection string.** Keep it in `.env` and use a database user with its own password.
 
 ### Running the App
 
@@ -102,7 +103,7 @@ SQLITE_DB_PATH=./data/footer.db
 npm start
 ```
 
-The app will be available at `http://localhost:3000`.
+The app will be available at `http://localhost:3000`. On the first run the SQLite database is created automatically and filled with a few sample products.
 
 ---
 

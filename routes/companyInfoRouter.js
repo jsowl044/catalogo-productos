@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/postgres');
+const db = require('../db/sqlite');
 
 // Obtener la información de la empresa
 router.get('/', (req, res) => {
