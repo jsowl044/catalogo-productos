@@ -19,7 +19,9 @@ if (process.env.MONGO_URI) {
 
 // Middlewares
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
+// Las imágenes viajan como data URL en base64 (hasta 1 MB de archivo, ~1,4 MB codificado);
+// el límite por defecto de Express (100 kb) las rechazaba con un error 413.
+app.use(express.json({ limit: '2mb' }));
 
 // Rutas
 app.use('/api/productos', require('./routes/productosRouter'));

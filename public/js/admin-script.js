@@ -244,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
             inputNombre.value = producto.nombre;
             inputDescripcion.value = producto.descripcion;
             inputPrecio.value = producto.precio;
+            inputRebaja.checked = Boolean(producto.rebaja); // sin esto, al guardar se perdía la marca de rebaja
             previewImagenDiv.innerHTML = `<img src="${producto.imagen}" alt="Imagen actual del producto">`;
             btnGuardar.textContent = 'Actualizar Producto';
             btnCancelar.style.display = 'inline-block'; // Mostrar botón cancelar
