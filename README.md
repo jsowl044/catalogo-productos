@@ -14,6 +14,19 @@
 
 The frontend is plain HTML, CSS and JavaScript (no framework, no build step) served by the same Express server.
 
+<table>
+  <tr>
+    <td valign="top"><img src="docs/tienda.png" alt="Public catalog with the search box, the image carousel and product cards" width="320"></td>
+    <td valign="top"><img src="docs/tarjeta-girada.png" alt="A product card flipped to show its description, price and sale flag" width="320"></td>
+    <td valign="top"><img src="docs/admin.png" alt="Admin page editing a product that is on sale" width="320"></td>
+  </tr>
+  <tr>
+    <td align="center">Public catalog</td>
+    <td align="center">Card flipped on hover</td>
+    <td align="center">Admin page</td>
+  </tr>
+</table>
+
 ---
 
 ## ✨ Features
